@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>header/a01.jfif</file>
+        <file>header/a02.jfif</file>
+        <file>header/a03.jfif</file>
+        <file>header/a04.jpg</file>
+        <file>header/a05.jfif</file>
+        <file>header/a06.jfif</file>
+        <file>header/a07.jfif</file>
+        <file>header/a08.png</file>
+        <file>header/a11.jfif</file>
+        <file>header/a12.jfif</file>
+    </qresource>
+</RCC>
