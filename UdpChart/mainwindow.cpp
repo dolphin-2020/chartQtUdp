@@ -2,11 +2,33 @@
 #include "ui_mainwindow.h"
 #include <QToolButton>
 #include "dialog.h"
+#include<QHostInfo>
+#include<QLabel>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+
+    QLabel *label = new QLabel(this);
+        QString localName = QHostInfo::localHostName();
+
+        label->setGeometry(QRect(50,50,200,40));
+        label->setText("PC-Name: "+localName);
+
+        QLabel *label_IP = new QLabel(this);
+        label_IP->setGeometry(QRect(50,100,200,40));
+        QHostInfo info = QHostInfo::fromName(localName);
+        //遍历地址获取IPV4地址
+        foreach(QHostAddress address,info.addresses())
+        {
+            if(address.protocol()==QAbstractSocket::IPv4Protocol)
+            {
+                qDebug()<<address.toString();
+            }
+}
+
     QVector<QToolButton*>btns;
 
     QList<QString> list;

@@ -2,17 +2,21 @@
 #include "ui_dialog.h"
 #include <QDataStream>
 #include<QDateTime>
+#include<QHostInfo>
+#include<QNetworkInterface>
 dialog::dialog(QWidget *parent,QString name) :
     QWidget(parent),
     ui(new Ui::dialog)
 {
     ui->setupUi(this);
+
     udpSocket=new QUdpSocket(this);
     uName=name;
     this->port=9999;
 
     //采用shareAddress模式（即允许其他的服务连接到相同的地址和端口，特别是在多客户端
     //监听同一个服务球场端口等时特别有效）和reuseaddresshint模式（重新连接服务器）
+    //udpSocket->bind(port,QUdpSocket::ShareAddress|QUdpSocket::ReuseAddressHint);
     udpSocket->bind(port,QUdpSocket::ShareAddress|QUdpSocket::ReuseAddressHint);
 
     //发送新用户进入
@@ -67,7 +71,8 @@ void dialog::sndMsg(MsgType type)
         break;
     }
     //书写报文
-    udpSocket->writeDatagram(array,QHostAddress::Broadcast,port);
+    //udpSocket->writeDatagram(array,QHostAddress::Broadcast,port);
+    udpSocket->writeDatagram(array,QHostAddress("192.168.100.112"),port);//192.168.100.112
 
 }//广播UDP消息
 
@@ -102,7 +107,7 @@ void dialog::usrLeft(QString usrName, QString time)
         ui->msgBrowser->setTextColor(Qt::gray);
         ui->msgBrowser->append(QString("%1 leave at %2").arg(time));
         //在线人数更新
-         ui->usrNumber->setText(QString("Online Number: %1").arg(ui->usrtable->rowCount()));
+         ui->usrNumber->setText(QString("Online Number: %1").arg(ui->usrtable->rowCount()).arg(time));
     }
 }
 
